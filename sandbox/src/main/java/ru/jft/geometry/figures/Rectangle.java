@@ -1,13 +1,19 @@
 package ru.jft.geometry.figures;
 
-public class Rectangle {
-    public static void printRectangleArea(double a, double b) {
+import org.w3c.dom.css.Rect;
+
+public record Rectangle(
+        double width,
+        double length
+                            ) {
+
+    public static void printArea(Rectangle r) {
         String text = String.format("Площадь прямоугольника со сторонами %f b %f = %f",
-                a,b,rectangleArea(a, b));
+                r.width, r.length, area(r));
         System.out.println(text);
     }
 
-    private static double rectangleArea(double a, double b) {
-        return a * b;
+    private static double area(Rectangle r) {
+        return r.width * r.length;
     }
 }
