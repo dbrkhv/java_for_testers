@@ -14,7 +14,7 @@ public record Triangle(double a,
         return 2.0 * halfperimeter;
     }
 
-    public double calculateArea(Triangle t) {
+    public static double calculateArea(Triangle t) {
         area = sqrt(t.halfperimeter*(t.halfperimeter-t.a)*(t.halfperimeter-t.b)*(t.halfperimeter-t.c));
         return area;
     }
