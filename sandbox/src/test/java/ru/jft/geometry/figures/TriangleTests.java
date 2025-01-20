@@ -17,7 +17,6 @@ public class TriangleTests {
     @Test
     void checkCalculateArea() {
         Triangle t1 = new Triangle(5.0, 12.0, 13.0);
-        System.out.println(Triangle.calculatePerimeter(t1));
         Assertions.assertEquals(30.0, Triangle.calculateArea(t1));
 
         Triangle t2 = new Triangle(10.0, 10.0, 10.0);
