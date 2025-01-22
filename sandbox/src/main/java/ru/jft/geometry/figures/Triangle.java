@@ -7,15 +7,14 @@ public record Triangle(double a,
                        double c) {
 
     static double area;
-    static double halfperimeter;
 
-    public static double calculatePerimeter(Triangle t) {
-        halfperimeter = (t.a+t.b+t.c)/2;
-        return 2.0 * halfperimeter;
+    public double calculatePerimeter() {
+        return (this.a+this.b+this.c);
     }
 
-    public static double calculateArea(Triangle t) {
-        area = sqrt(t.halfperimeter*(t.halfperimeter-t.a)*(t.halfperimeter-t.b)*(t.halfperimeter-t.c));
+    public double calculateArea() {
+        double hPer = calculatePerimeter()/2;
+        area = sqrt(hPer*(hPer-this.a)*(hPer-this.b)*(hPer-this.c));
         return area;
     }
 }

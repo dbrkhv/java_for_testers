@@ -4,23 +4,22 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class TriangleTests {
+    Triangle t1 = new Triangle(5.0, 12.0, 13.0);
+    Triangle t2 = new Triangle(10.0, 10.0, 10.0);
+    private double expPer = 30.0;
+    private double expAr1 = 30.0;
+    private double expAr2 = 43.30127018922193;
 
     @Test
     void checkCalculatePerimeter() {
-        Triangle t1 = new Triangle(5.0, 12.0, 13.0);
-        Assertions.assertEquals(30.0, Triangle.calculatePerimeter(t1));
-
-        Triangle t2 = new Triangle(10.0, 10.0, 10.0);
-        Assertions.assertEquals(30.0, Triangle.calculatePerimeter(t2));
+        Assertions.assertEquals(expPer, t1.calculatePerimeter());
+        Assertions.assertEquals(expPer, t2.calculatePerimeter());
     }
 
     @Test
     void checkCalculateArea() {
-        Triangle t1 = new Triangle(5.0, 12.0, 13.0);
-        Assertions.assertEquals(30.0, Triangle.calculateArea(t1));
-
-        Triangle t2 = new Triangle(10.0, 10.0, 10.0);
-        Assertions.assertEquals(43.30127018922193, Triangle.calculateArea(t2));
+        Assertions.assertEquals(expAr1, t1.calculateArea());
+        Assertions.assertEquals(expAr2, t2.calculateArea());
     }
 }
 
