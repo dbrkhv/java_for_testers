@@ -8,6 +8,15 @@ public record Triangle(double a,
 
     static double area;
 
+    public Triangle{
+        if (a <= 0 || b <= 0 || c <= 0) {
+            throw new IllegalArgumentException("Triangle side should be non-negative");
+        }
+        if (a + b < c || b + c < a || c + a < b) {
+            throw new IllegalArgumentException("Triangle`s equality is violated");
+        }
+    }
+
     public double calculatePerimeter() {
         return (this.a+this.b+this.c);
     }

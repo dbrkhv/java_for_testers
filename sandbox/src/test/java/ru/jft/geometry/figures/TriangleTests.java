@@ -21,6 +21,51 @@ public class TriangleTests {
         Assertions.assertEquals(expAr1, t1.calculateArea());
         Assertions.assertEquals(expAr2, t2.calculateArea());
     }
+
+    @Test
+    void cannotCrateIncorrectTriangle () {
+        try {
+            new Triangle(-3.0, 4.0, 5.0);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            //После доработки конструктора сюда не должно заходить
+        }
+
+        try {
+            new Triangle(3.0, -4.0, 5.0);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            //После доработки конструктора сюда не должно заходить
+        }
+
+        try {
+            new Triangle(3.0, 4.0, -5.0);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            //После доработки конструктора сюда не должно заходить
+        }
+
+        try {
+            new Triangle(3.0, 4.0, 8.0);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            //После доработки конструктора сюда не должно заходить
+        }
+
+        try {
+            new Triangle(10.0, 4.0, 5.0);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            //После доработки конструктора сюда не должно заходить
+        }
+
+        try {
+            new Triangle(3.0, 9.0, 5.0);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            //После доработки конструктора сюда не должно заходить
+        }
+    }
 }
 
 
