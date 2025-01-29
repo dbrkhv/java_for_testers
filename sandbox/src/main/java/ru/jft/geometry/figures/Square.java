@@ -2,16 +2,22 @@ package ru.jft.geometry.figures;
 
 import static java.lang.Math.pow;
 
-public class Square {
+public record Square (double side) {
 
-    private double side;
+    /*private double side;
 
-    //Это конструктор. По нему создаются объекты данного класса
+    Это конструктор. По нему создаются объекты данного класса
     public Square(double Side) {
         /*this - ключевое свойство для использоания текущего объекта
         this.side - объявляется для всего класса = свойство объекта,
-         Side - что ждем на вход = свойство функции*/
+         Side - что ждем на вход = свойство функции
         this.side = Side;
+    }*/
+
+    public Square{
+        if (side < 0){
+            throw new IllegalArgumentException("Square side should be non-negative");
+        }
     }
 
     //Даем на вход объект, который создали, так как там вся информация есть
