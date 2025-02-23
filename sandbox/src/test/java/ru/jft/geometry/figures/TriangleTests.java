@@ -22,6 +22,7 @@ public class TriangleTests {
         Assertions.assertEquals(expAr2, t2.calculateArea());
     }
 
+    //Д.з.3
     @Test
     void cannotCrateIncorrectTriangleSideA () {
         try {
@@ -81,6 +82,14 @@ public class TriangleTests {
         } catch (IllegalArgumentException exception) {
             //После доработки конструктора сюда не должно заходить
         }
+    }
+
+    //Д.з.4
+    @Test
+    void testEquality() {
+        Triangle t1 = new Triangle(3.0, 4.0, 5.0);
+        Triangle t2 = new Triangle(4.0, 5.0, 3.0);
+        Assertions.assertTrue(t1.equals(t2));
     }
 }
 
