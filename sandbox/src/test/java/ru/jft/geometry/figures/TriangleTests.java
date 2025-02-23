@@ -23,42 +23,58 @@ public class TriangleTests {
     }
 
     @Test
-    void cannotCrateIncorrectTriangle () {
+    void cannotCrateIncorrectTriangleSideA () {
         try {
             new Triangle(-3.0, 4.0, 5.0);
+            Assertions.fail();
             Assertions.fail();
         } catch (IllegalArgumentException exception) {
             //После доработки конструктора сюда не должно заходить
         }
+    }
 
+    @Test
+    void cannotCrateIncorrectTriangleSideB () {
         try {
             new Triangle(3.0, -4.0, 5.0);
             Assertions.fail();
         } catch (IllegalArgumentException exception) {
             //После доработки конструктора сюда не должно заходить
         }
+    }
 
+    @Test
+    void cannotCrateIncorrectTriangleSideC () {
         try {
             new Triangle(3.0, 4.0, -5.0);
             Assertions.fail();
         } catch (IllegalArgumentException exception) {
             //После доработки конструктора сюда не должно заходить
         }
+    }
 
+    @Test
+    void cannotCreateBrokenEqualityAB() {
         try {
             new Triangle(3.0, 4.0, 8.0);
             Assertions.fail();
         } catch (IllegalArgumentException exception) {
             //После доработки конструктора сюда не должно заходить
         }
+    }
 
+    @Test
+    void cannotCreateBrokenEqualityBC() {
         try {
             new Triangle(10.0, 4.0, 5.0);
             Assertions.fail();
         } catch (IllegalArgumentException exception) {
             //После доработки конструктора сюда не должно заходить
         }
+    }
 
+    @Test
+    void cannotCreateBrokenEqualityAC() {
         try {
             new Triangle(3.0, 9.0, 5.0);
             Assertions.fail();
