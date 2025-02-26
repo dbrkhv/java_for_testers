@@ -32,10 +32,19 @@ public record Triangle(double a,
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        //Triangle triangle = (Triangle) o;
-        return (Double.compare(a, this.a) == 0 && Double.compare(b, this.b) == 0 && Double.compare(c, this.c) == 0)||
-                (Double.compare(a, this.b) == 0 && Double.compare(b, this.a) == 0 && Double.compare(c, this.a) == 0)||
-                (Double.compare(a, this.c) == 0 && Double.compare(b, this.c) == 0 && Double.compare(c, this.b) == 0);
+        Triangle triangle = (Triangle) o;
+        return (//(3,4,5)
+                Double.compare(triangle.a, this.a) == 0 && Double.compare(triangle.b, this.b) == 0 && Double.compare(triangle.c, this.c) == 0)||
+                //(4,5,3)
+                (Double.compare(triangle.a, this.b) == 0 && Double.compare(triangle.b, this.c) == 0 && Double.compare(triangle.c, this.a) == 0)||
+                //(5,3,4)
+                (Double.compare(triangle.a, this.c) == 0 && Double.compare(triangle.b, this.a) == 0 && Double.compare(triangle.c, this.b) == 0)||
+                //(3,5,4)
+                (Double.compare(triangle.a, this.a) == 0 && Double.compare(triangle.b, this.c) == 0 && Double.compare(triangle.c, this.b) == 0)||
+                //(5,4,3)
+                (Double.compare(triangle.a, this.c) == 0 && Double.compare(triangle.b, this.b) == 0 && Double.compare(triangle.c, this.a) == 0)||
+                //(4,3,5)
+                (Double.compare(triangle.a, this.b) == 0 && Double.compare(triangle.b, this.a) == 0 && Double.compare(triangle.c, this.c) == 0);
     }
 
     @Override
