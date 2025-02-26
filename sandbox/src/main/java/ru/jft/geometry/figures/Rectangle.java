@@ -28,8 +28,8 @@ public record Rectangle(
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Rectangle rectangle = (Rectangle) o;
-        return (Double.compare(width, this.width) == 0 && Double.compare(length, this.length) == 0)||
-                (Double.compare(width, this.length) == 0 && Double.compare(length, this.width) == 0);
+        return (Double.compare(rectangle.width, this.width) == 0 && Double.compare(rectangle.length, this.length) == 0)||
+                (Double.compare(rectangle.width, this.length) == 0 && Double.compare(rectangle.length, this.width) == 0);
     }
 
     @Override
