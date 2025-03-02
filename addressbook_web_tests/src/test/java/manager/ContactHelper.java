@@ -10,14 +10,14 @@ public class ContactHelper extends HelperBase {
     }
 
     public void openHomePage() {
-        //Будем определять сейчас приложение на home page или нет по тексту Number of results:
-        if (manager.isElementPresent(By.xpath("//contains[text(), 'Number of results:']"))) {
+        //Будем определять сейчас приложение на home page или нет по стороке поиска searchstring:
+        if (manager.isElementPresent(By.name("searchstring"))) {
             click(By.linkText("home"));
         }
     }
 
     public void initContactCreation() {
-        if (!manager.isElementPresent(By.xpath("//contains[text(), 'Edit / add address book entry']"))) {
+        if (!manager.isElementPresent(By.xpath("//*[@id='content']/h1"))) { // //*[contains(text(), 'Edit / add address book entry')]
             click(By.linkText("add new"));
         }
     }
@@ -44,14 +44,14 @@ public class ContactHelper extends HelperBase {
 
     public void fillContactForm(ContactData contact) {
         type(By.name("firstname"), contact.firstName());
-        type(By.name("middleName"), contact.middleName());
-        type(By.name("lastName"), contact.lastName());
+        type(By.name("middlename"), contact.middleName());
+        type(By.name("lastname"), contact.lastName());
         type(By.name("nickname"), contact.nickname());
         type(By.name("company"), contact.company());
         type(By.name("address"), contact.address());
-        type(By.name("homePhone"), contact.homePhone());
-        type(By.name("mobilePhone"), contact.mobilePhone());
-        type(By.name("workPhone"), contact.workPhone());
+        type(By.name("home"), contact.homePhone());
+        type(By.name("mobile"), contact.mobilePhone());
+        type(By.name("work"), contact.workPhone());
         type(By.name("fax"), contact.fax());
         type(By.name("email"), contact.email());
         type(By.name("email2"), contact.email2());
