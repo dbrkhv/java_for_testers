@@ -12,7 +12,7 @@ public class TestBase {
     public void setUp() {
         if (app == null){
             app = new ApplicationManager();
-            app.init("chrome"); //edge
+            app.init("edge"); // chrome edge
         }
     }
 
