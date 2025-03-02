@@ -20,4 +20,9 @@ public class ContactRemovalTests extends TestBase {
         }
         app.contacts().removeAllContacts();
     }
+
+    @Test
+    public void canRemoveEmptyContactList() {
+        app.contacts().removeEmptyContactList();
+    }
 }

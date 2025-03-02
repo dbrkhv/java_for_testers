@@ -75,6 +75,7 @@ public class ContactHelper extends HelperBase {
         selectContact();
         removeSelectedContact();
         //closeAlertAfterContactRemoval(); - Выходит assert "no such alert"
+        openHomePage();
     }
 
     public void removeSelectedContact() {
@@ -90,5 +91,15 @@ public class ContactHelper extends HelperBase {
         selectAllContacts();
         removeSelectedContact();
         //closeAlertAfterContactRemoval();
+        openHomePage();
+    }
+
+    public void removeEmptyContactList() {
+        openHomePage();
+        if (isContactPresent()) {
+            removeAllContacts();
+        }
+        removeSelectedContact();
+        closeAlertAfterContactRemoval();
     }
 }
