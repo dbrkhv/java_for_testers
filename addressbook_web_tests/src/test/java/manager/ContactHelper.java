@@ -11,7 +11,7 @@ public class ContactHelper extends HelperBase {
 
     public void openHomePage() {
         //Будем определять сейчас приложение на home page или нет по стороке поиска searchstring:
-        if (manager.isElementPresent(By.name("searchstring"))) {
+        if (!manager.isElementPresent(By.name("searchstring"))) {
             click(By.linkText("home"));
         }
     }
@@ -66,22 +66,29 @@ public class ContactHelper extends HelperBase {
         click(By.name("selected[]"));
     }
 
-    /*private void selectFirstContact() {
-        click(By.xpath("//selected[]"));
-    }*/
+    public void selectAllContacts() {
+        click(By.id("MassCB"));
+    }
 
     public void removeContact() {
         openHomePage();
         selectContact();
         removeSelectedContact();
-        closeAlertAfterContactRemoval();
+        //closeAlertAfterContactRemoval(); - Выходит assert "no such alert"
     }
 
     public void removeSelectedContact() {
-        click(By.name("Delete"));
+        click(By.xpath("//input[@value='Delete']"));
     }
 
     public void closeAlertAfterContactRemoval() {
         manager.driver.switchTo().alert().accept();
+    }
+
+    public void removeAllContacts() {
+        openHomePage();
+        selectAllContacts();
+        removeSelectedContact();
+        //closeAlertAfterContactRemoval();
     }
 }
