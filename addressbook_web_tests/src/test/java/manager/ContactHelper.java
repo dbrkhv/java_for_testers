@@ -102,4 +102,9 @@ public class ContactHelper extends HelperBase {
         removeSelectedContact();
         closeAlertAfterContactRemoval();
     }
+
+    public int getCount() {
+        openHomePage();
+        return manager.driver.findElements(By.name("selected[]")).size();
+    }
 }
