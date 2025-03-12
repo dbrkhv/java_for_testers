@@ -10,7 +10,8 @@ public class ContactRemovalTests extends TestBase {
        if (!app.contacts().isContactPresent()) {
             app.contacts().createContact(new ContactData().withLastName("lastname"));
         }
-        app.contacts().removeContact();
+       var oldContacts = app.contacts().getList();
+       app.contacts().removeContact();
     }
 
     @Test

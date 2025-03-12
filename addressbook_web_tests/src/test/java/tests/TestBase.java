@@ -29,4 +29,26 @@ public class TestBase {
         }*/
         return result;
     }
+
+    public static String randomEmailString (int n) {
+        var rnd = new Random();
+        var result = "";
+        for (int i = 0; i < n; i++) {
+            result = result + (char)('a' + rnd.nextInt(26));
+        }
+        result = result + "@test.com";
+        /*if (n < 20) {
+            result = result + '\'';
+        }*/
+        return result;
+    }
+
+    public static String randomPhoneString (int n) {
+        var rnd = new Random();
+        var result = "";
+        for (int i = 0; i < n; i++) {
+            result = result + (char)('0' + rnd.nextInt(9));
+        }
+        return result;
+    }
 }
