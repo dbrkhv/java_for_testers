@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactCreationTests extends TestBase {
@@ -25,10 +26,21 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("randomContactsProvider")
     public void canCreateContacts(ContactData contact) {
-        int contactsCount = app.contacts().getCount();
+        var oldContacts = app.contacts().getList();
         app.contacts().createContact(contact);
-        int newContactsCount = app.contacts().getCount();
-        Assertions.assertEquals(contactsCount + 1, newContactsCount);
+        var newContacts = app.contacts().getList();
+        Comparator<ContactData> compareContactsById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newContacts.sort(compareContactsById);
+
+        var expectedContacts = new ArrayList<>(oldContacts);
+        expectedContacts.add(contact.withId(newContacts.get(newContacts.size()-1).id()).withMiddleName("")
+                .withNickname("").withCompany("").withAddress("").withHomePhone("").withMobilePhone("").withWorkPhone("")
+                .withFax("").withEmail("").withEmail2("").withEmail3(""));
+        expectedContacts.sort(compareContactsById);
+
+        Assertions.assertEquals(expectedContacts, newContacts);
     }
 
     public static List<ContactData> negativeContactProvider() {
@@ -42,14 +54,14 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("negativeContactProvider")
     public void canNotCreateContact(ContactData contact) {
-        int contactsCount = app.contacts().getCount();
+        var oldContacts = app.contacts().getList();
         app.contacts().createContact(contact);
-        int newContactsCount = app.contacts().getCount();
-        Assertions.assertEquals(contactsCount, newContactsCount);
+        var newContacts = app.contacts().getList();
+        Assertions.assertEquals(newContacts, oldContacts);
     }
 
     public static List<ContactData> oneContactProvider() {
-        var result = new ArrayList<ContactData>(List.of(
+        var result = new ArrayList<>(List.of(
                 new ContactData().withFirstName("firstname").withMiddleName("middlename").withLastName("").withNickname("")
                         .withCompany("").withAddress("").withHomePhone("").withMobilePhone("").withWorkPhone("").
                         withEmail("").withEmail2("").withEmail3("")));
@@ -59,12 +71,26 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("oneContactProvider")
     public void canCreateContactByAddNextButton(ContactData contact) {
-        int contactsCount = app.contacts().getCount();
+        var oldContacts = app.contacts().getList();
         app.contacts().createContact(contact);
         app.contacts().initAddNextContact();
         app.contacts().createContact(contact);
-        int newContactsCount = app.contacts().getCount();
-        Assertions.assertEquals(contactsCount + 2, newContactsCount);
+        var newContacts = app.contacts().getList();
+        Comparator<ContactData> compareContactsById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newContacts.sort(compareContactsById);
+
+        var expectedContacts = new ArrayList<>(oldContacts);
+        expectedContacts.add(contact.withId(newContacts.get(newContacts.size()-2).id()).withMiddleName("")
+                .withNickname("").withCompany("").withAddress("").withHomePhone("").withMobilePhone("").withWorkPhone("")
+                .withFax("").withEmail("").withEmail2("").withEmail3(""));
+        expectedContacts.add(contact.withId(newContacts.get(newContacts.size()-1).id()).withMiddleName("")
+                .withNickname("").withCompany("").withAddress("").withHomePhone("").withMobilePhone("").withWorkPhone("")
+                .withFax("").withEmail("").withEmail2("").withEmail3(""));
+        expectedContacts.sort(compareContactsById);
+
+        Assertions.assertEquals(expectedContacts, newContacts);
     }
 
     public static List<ContactData> contactsProvider() {
