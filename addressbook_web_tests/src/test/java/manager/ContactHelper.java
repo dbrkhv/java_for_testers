@@ -65,17 +65,17 @@ public class ContactHelper extends HelperBase {
         click(By.name("submit"));
     }
 
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public void selectContact(ContactData contact) {
+        click(By.cssSelector(String.format("input[id='%s']", contact.id())));
     }
 
     public void selectAllContacts() {
         click(By.id("MassCB"));
     }
 
-    public void removeContact() {
+    public void removeContact(ContactData contact) {
         openHomePage();
-        selectContact();
+        selectContact(contact);
         removeSelectedContact();
         //closeAlertAfterContactRemoval(); - Выходит assert "no such alert"
         openHomePage();
@@ -114,6 +114,15 @@ public class ContactHelper extends HelperBase {
     public List<ContactData> getList() {
         openHomePage();
         var contacts = new ArrayList<ContactData>();
+        var trs = manager.driver.findElements(By.cssSelector("tbody tr[name='entry']"));
+        for ( var tr : trs) {
+            var checkbox = tr.findElement(By.name("selected[]"));
+            var id = checkbox.getDomAttribute("id");
+            var tds = tr.findElements(By.cssSelector("td"));
+            var lastName = tds.get(1).getText();
+            var firstName = tds.get(2).getText();
+            contacts.add(new ContactData().withId(id).withLastName(lastName).withFirstName(firstName));
+        }
         return contacts;
     }
 }
