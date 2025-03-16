@@ -1,3 +1,5 @@
+import java.io.File;
+
 public class Hello {
     public static void main (String[] args) {
             var x = 1;
@@ -8,6 +10,12 @@ public class Hello {
                 int z = divide(x, y);
                 System.out.println("Hello, world!");
             }
+
+        var configfile = new File("sandbox/build.graddle");
+        System.out.println(configfile.getAbsolutePath());
+        System.out.println(configfile.exists());
+
+        System.out.println(new File("").getAbsolutePath());
     }
 
     public static int divide (int x, int y){

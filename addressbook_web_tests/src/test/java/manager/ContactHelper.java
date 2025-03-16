@@ -50,6 +50,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("middlename"), contact.middleName());
         type(By.name("lastname"), contact.lastName());
         type(By.name("nickname"), contact.nickname());
+        attach(By.name("photo"), contact.photo());
         type(By.name("company"), contact.company());
         type(By.name("address"), contact.address());
         type(By.name("home"), contact.homePhone());
