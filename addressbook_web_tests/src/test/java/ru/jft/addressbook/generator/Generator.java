@@ -4,6 +4,8 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import ru.jft.addressbook.common.CommonFunctions;
 import ru.jft.addressbook.model.ContactData;
 import ru.jft.addressbook.model.GroupData;
@@ -53,6 +55,8 @@ public class Generator {
 
     private Object generateGroups() {
         //--type groups --output groups.json --format json --count 3
+        //--type groups --output groups.yaml --format yaml --count 3
+        //--type groups --output groups.xml --format xml --count 3
         var result = new ArrayList<GroupData>();
         for (int i =0; i < count; i++) {
             result.add(new GroupData()
@@ -86,6 +90,12 @@ public class Generator {
             try (var writer = new FileWriter(output)) {
                 writer.write(json);
             }
+        } if ("yaml".equals(format)) {
+            var mapper = new YAMLMapper();
+            mapper.writeValue(new File(output), data);
+        } if ("xml".equals(format)) {
+            var mapper = new XmlMapper();
+            mapper.writeValue(new File(output), data);
         } else {
             throw new IllegalArgumentException("Неизвестный формат данных" + format);
         }

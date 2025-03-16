@@ -18,6 +18,8 @@ dependencies {
 
     implementation ("org.jcommander:jcommander:2.0")
     implementation ("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2")
+    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.1")
 }
 
 tasks.test {
