@@ -1,31 +1,35 @@
 package ru.jft.addressbook.tests;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import ru.jft.addressbook.common.CommonFunctions;
 import ru.jft.addressbook.model.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import ru.jft.addressbook.model.GroupData;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class ContactCreationTests extends TestBase {
 
-    public static List<ContactData> randomContactsProvider() {
+    public static List<ContactData> contactsProvider() throws IOException {
         var result = new ArrayList<ContactData>();
-        for (int i =0; i < 2; i++) {
-            result.add(new ContactData().withFirstName( CommonFunctions.randomString(i*10)).withMiddleName( CommonFunctions.randomString(i*10))
-                    .withLastName(CommonFunctions.randomString(i*10)).withNickname(CommonFunctions.randomString(i*10)).withCompany(CommonFunctions.randomString(i*10))
-                    .withAddress( CommonFunctions.randomString(i*10)).withHomePhone(CommonFunctions.randomPhoneString(i*10)).withMobilePhone(CommonFunctions.randomPhoneString(i*10))
-                    .withWorkPhone(CommonFunctions.randomPhoneString(i*10)).withFax(CommonFunctions.randomPhoneString(i*10)).withEmail(CommonFunctions.randomEmailString(i*10))
-                    .withEmail2(CommonFunctions.randomEmailString(i*10)).withEmail3(CommonFunctions.randomEmailString(i*10)).withPhoto(CommonFunctions.randomFile("src/test/resources/images")));
-        }
+        var mapper = new ObjectMapper();
+        //XmlMapper YAMLMapper xml yaml
+        var readValues = mapper.readValue(new File("contacts.json"), new TypeReference<List<ContactData>>() {});
+        result.addAll(readValues);
         return result;
     }
 
     @ParameterizedTest
-    @MethodSource("randomContactsProvider")
+    @MethodSource("contactsProvider")
     public void canCreateContacts(ContactData contact) {
         var oldContacts = app.contacts().getList();
         app.contacts().createContact(contact);
@@ -96,18 +100,5 @@ public class ContactCreationTests extends TestBase {
         expectedContacts.sort(compareContactsById);
 
         Assertions.assertEquals(expectedContacts, newContacts);
-    }
-
-    public static List<ContactData> contactsProvider() {
-        var result = new ArrayList<ContactData>();
-        for (var firstName : List.of("", "firstname")) {
-            for (var middleName : List.of("", "middlename")) {
-                result.add(new ContactData().withFirstName(firstName).withMiddleName(middleName)
-                        .withLastName(CommonFunctions.randomString(5)).withNickname(CommonFunctions.randomString(5)).withCompany(CommonFunctions.randomString(5))
-                        .withAddress( CommonFunctions.randomString(5)).withHomePhone(CommonFunctions.randomPhoneString(5)).withMobilePhone(CommonFunctions.randomPhoneString(5))
-                        .withWorkPhone(CommonFunctions.randomPhoneString(5)).withEmail(CommonFunctions.randomEmailString(5)).withEmail2(CommonFunctions.randomEmailString(5)).withEmail3(CommonFunctions.randomEmailString(5)));
-            }
-        }
-        return result;
     }
 }
