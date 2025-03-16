@@ -1,23 +1,10 @@
-package tests;
+package ru.jft.addressbook.common;
 
-import manager.ApplicationManager;
-import org.junit.jupiter.api.BeforeEach;
-
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.Random;
 
-public class TestBase {
-
-    protected static ApplicationManager app;
-
-    //BeforeEach и AfterEach - фикстуры
-    @BeforeEach
-    public void setUp() {
-        if (app == null){
-            app = new ApplicationManager();
-            app.init("chrome"); // chrome edge
-        }
-    }
-
+public class CommonFunctions {
     public static String randomString (int n) {
         var rnd = new Random();
         var result = "";
@@ -50,5 +37,12 @@ public class TestBase {
             result = result + (char)('0' + rnd.nextInt(9));
         }
         return result;
+    }
+
+    public static String randomFile(String dir) {
+        var fileNames = new File(dir).list();
+        var rnd = new Random();
+        var index = rnd.nextInt(fileNames.length);
+        return Paths.get(dir, fileNames[index]).toString();
     }
 }

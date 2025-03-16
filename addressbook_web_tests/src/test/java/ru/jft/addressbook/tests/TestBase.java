@@ -1,0 +1,18 @@
+package ru.jft.addressbook.tests;
+
+import ru.jft.addressbook.manager.ApplicationManager;
+import org.junit.jupiter.api.BeforeEach;
+
+public class TestBase {
+
+    protected static ApplicationManager app;
+
+    //BeforeEach и AfterEach - фикстуры
+    @BeforeEach
+    public void setUp() {
+        if (app == null){
+            app = new ApplicationManager();
+            app.init("chrome"); // chrome edge
+        }
+    }
+}

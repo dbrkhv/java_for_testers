@@ -1,3 +1,5 @@
+val implementation: Unit = Unit
+
 plugins {
     id("java")
 }
@@ -13,6 +15,8 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.seleniumhq.selenium:selenium-java:4.29.0")
+
+    implementation ("org.jcommander:jcommander:2.0")
 }
 
 tasks.test {

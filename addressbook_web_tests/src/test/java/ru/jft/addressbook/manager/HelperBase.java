@@ -1,4 +1,4 @@
-package manager;
+package ru.jft.addressbook.manager;
 
 import org.openqa.selenium.By;
 

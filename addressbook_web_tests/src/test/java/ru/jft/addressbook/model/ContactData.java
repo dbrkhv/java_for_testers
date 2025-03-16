@@ -1,4 +1,4 @@
-package model;
+package ru.jft.addressbook.model;
 
 public record ContactData(String id, String firstName, String middleName, String lastName, String nickname,
                           String company, String address, String homePhone, String mobilePhone, String workPhone,

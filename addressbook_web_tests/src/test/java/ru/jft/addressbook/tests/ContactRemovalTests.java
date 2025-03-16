@@ -1,6 +1,6 @@
-package tests;
+package ru.jft.addressbook.tests;
 
-import model.ContactData;
+import ru.jft.addressbook.model.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
