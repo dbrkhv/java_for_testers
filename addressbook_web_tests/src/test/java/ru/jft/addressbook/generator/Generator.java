@@ -2,10 +2,14 @@ package ru.jft.addressbook.generator;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import ru.jft.addressbook.common.CommonFunctions;
 import ru.jft.addressbook.model.ContactData;
 import ru.jft.addressbook.model.GroupData;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Generator {
@@ -22,7 +26,7 @@ public class Generator {
     @Parameter(names={"--count", "-n"})
     int count;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         var generator = new Generator();
         JCommander.newBuilder()
                 .addObject(generator)
@@ -31,7 +35,7 @@ public class Generator {
         generator.run();
     }
 
-    private void run() {
+    private void run() throws IOException {
         var data = generate();
         save(data);
     }
@@ -71,7 +75,15 @@ public class Generator {
         return result;
     }
 
-    private void save(Object data) {
-
+    private void save(Object data) throws IOException {
+        //IOException появляется, так как исключения могут возникнуть пи использовании writeValue()
+        // смысла выводить в консоль и оборачивать в try-catch нет, поэтому обрабатываем в классе
+        if ("json".equals(format)) {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            mapper.writeValue(new File(output), data);
+        } else {
+            throw new IllegalArgumentException("Неизвестный формат данных" + format);
+        }
     }
 }
