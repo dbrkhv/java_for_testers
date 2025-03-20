@@ -3,6 +3,7 @@ package ru.jft.addressbook.tests;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import org.junit.jupiter.api.Test;
 import ru.jft.addressbook.common.CommonFunctions;
 import ru.jft.addressbook.model.GroupData;
 import org.junit.jupiter.api.Assertions;
@@ -48,20 +49,47 @@ public class GroupCreationTests extends TestBase {
         return result;
     }
 
+    public static List <GroupData> singleRandomGroup() {
+        return List.of(new GroupData()
+                        .withName(CommonFunctions.randomString(10))
+                        .withHeader(CommonFunctions.randomString(20))
+                        .withFooter(CommonFunctions.randomString(30)));
+    }
+
     @ParameterizedTest
-    @MethodSource("groupProvider")
-    public void canCreateMultipleGroups(GroupData group) {
-        var oldGroups = app.groups().getList();
+    @MethodSource("singleRandomGroup")
+    public void canCreateGroup(GroupData group) {
+        var oldGroups = app.jdbc().getGroupList();
         app.groups().createGroup(group);
-        var newGroups = app.groups().getList();
+        var newGroups = app.jdbc().getGroupList();
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
         newGroups.sort(compareById);
         var expectedList = new ArrayList<>(oldGroups);
-        expectedList.add(group.withId(newGroups.get(newGroups.size() - 1).id()).withHeader("").withFooter(""));
+        var maxId = group.withId(newGroups.get(newGroups.size() - 1).id());
+
+        expectedList.add(maxId);
         expectedList.sort(compareById);
         Assertions.assertEquals(newGroups, expectedList);
+    }
+
+    @Test
+    public void compareUiAndDbGroups() {
+        var dbGroups = app.jdbc().getGroupList();
+        Comparator<GroupData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        dbGroups.sort(compareById);
+        var uiGroups = app.groups().getList();
+        uiGroups.sort(compareById);
+        var dbGroupsExpected = new ArrayList<GroupData>();
+        int i = 0;
+        while (i <= dbGroups.size()-1 ) {
+            dbGroupsExpected.add(dbGroups.get(i).withFooter("").withHeader(""));
+            i++;
+        }
+        Assertions.assertEquals(uiGroups, dbGroupsExpected);
     }
 
     public static List <GroupData> negativeGroupProvider() {
