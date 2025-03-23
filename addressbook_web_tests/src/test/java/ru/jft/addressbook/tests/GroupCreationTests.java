@@ -59,24 +59,24 @@ public class GroupCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("singleRandomGroup")
     public void canCreateGroup(GroupData group) {
-        var oldGroups = app.jdbc().getGroupList();
+        var oldGroups = app.hbm().getGroupList();
         app.groups().createGroup(group);
-        var newGroups = app.jdbc().getGroupList();
+        var newGroups = app.hbm().getGroupList();
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
         newGroups.sort(compareById);
-        var expectedList = new ArrayList<>(oldGroups);
-        var maxId = group.withId(newGroups.get(newGroups.size() - 1).id());
+        var maxId = newGroups.get(newGroups.size() - 1).id();
 
-        expectedList.add(maxId);
+        var expectedList = new ArrayList<>(oldGroups);
+        expectedList.add(group.withId(maxId));
         expectedList.sort(compareById);
         Assertions.assertEquals(newGroups, expectedList);
     }
 
     @Test
     public void compareUiAndDbGroups() {
-        var dbGroups = app.jdbc().getGroupList();
+        var dbGroups = app.hbm().getGroupList();
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
